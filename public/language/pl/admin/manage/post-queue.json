@@ -1,0 +1,11 @@
+{
+	"post-queue": "Kolejka postów",
+	"description": "There are no posts in the post queue. <br> To enable this feature, go to <a href=\"%1\">Settings &rarr; Post &rarr; Post Queue</a> and enable <strong>Post Queue</strong>.",
+	"user": "Użytkownik",
+	"category": "Kategoria",
+	"title": "Tytuł",
+	"content": "Zawartość",
+	"posted": "Napisano",
+	"reply-to": "Odpowiedz do \"%1\"",
+	"content-editable": "Możesz kliknąć na danej treści, by edytować ją przed publikacją."
+}

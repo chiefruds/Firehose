@@ -1,0 +1,11 @@
+{
+	"post-queue": "Fronta příspěvků",
+	"description": "There are no posts in the post queue. <br> To enable this feature, go to <a href=\"%1\">Settings &rarr; Post &rarr; Post Queue</a> and enable <strong>Post Queue</strong>.",
+	"user": "Uživatel",
+	"category": "Kategorie",
+	"title": "Název",
+	"content": "Obsah",
+	"posted": "Přidáno",
+	"reply-to": "Odpovědět na \"%1\"",
+	"content-editable": "Kvůli úpravám a před odesláním příspěvku můžete klikat na obsah."
+}
