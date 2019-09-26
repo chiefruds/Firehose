@@ -56,6 +56,16 @@ class Encoder:
             encoded[i] = bisect_left(self.index, word)
         return encoded
 
-    def encodetext(self, text: str):
+    def encode(self, text: str):
         word_list = self.cleaner.clean(text)
         return self.encodelist(word_list)
+
+    def decode(self, encoded: list):
+        words = []
+        for num in encoded:
+            if num != self.count:
+                words.append(self.index[num])
+            else:
+                words.append("<UNKNOWN>")
+
+        return " ".join(words)
