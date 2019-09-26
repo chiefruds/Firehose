@@ -1,4 +1,3 @@
-import numpy
 import time
 from bisect import bisect_left
 from slangCleaner import SlangCleaner
@@ -50,7 +49,7 @@ class Encoder:
         return self.count
 
     def encodelist(self, word_list: list):
-        encoded = numpy.zeros((250, 1), dtype=numpy.int)
+        encoded = [0] * 250
         for i in range(len(word_list)):
             word = word_list[i].lower()
             encoded[i] = bisect_left(self.index, word)
