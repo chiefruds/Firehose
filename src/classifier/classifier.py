@@ -1,20 +1,36 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import pandas
-import os
 import subprocess
 
 import tensorflow as tf
 from tensorflow import keras
+import numpy
+
+from Dictionary import Encoder
 
 
 class Classifier:
-    def __init__(self, model_path: str = "model/model.h5", data_path: str = "resources/data.csv", labels_path: str = "resources/labels.csv", checkpoint_dir: str = "checkpoints/", retrain: bool = False):
+    labels = {
+        "unrelated": 0,
+        "savings": 1,
+        "investment": 2,
+        "insurance": 3,
+        "health": 4,
+        "mortgages": 5,
+        "loan": 6,
+        "retirement": 7
+    }
+
+    def __init__(self, model_path: str = "model/model.h5", data_path: str = "resources/data.csv",
+                 labels_path: str = "resources/labels.csv", checkpoint_dir: str = "checkpoints/",
+                 retrain: bool = False):
         self.model_path = model_path
         # If model does not exist or told to retrain, recreate model
         if retrain or not self.reload():
             self.create()
             self.train(data_path, labels_path, checkpoint_dir)
+        self.encoder = Encoder()
 
     def create(self):
         vocab_size = self.getvocabsize()
@@ -34,8 +50,17 @@ class Classifier:
         return
 
     def predict(self, text):
+        encoded = self.encoder.encode(text)
+        np_arr = numpy.array(encoded)
+        predictions = self.model.predict(np_arr)
 
-        return
+        max_value = predictions.max()
+        highest = 0
+        for i in range(len(predictions)):
+            if predictions[i] == max_value:
+                highest = i
+
+        return Classifier.labels.keys()[highest], max_value  # Returns (str, int) representing the label and confidence
 
     def save(self):
         self.model.save(self.model_path)
@@ -52,11 +77,12 @@ class Classifier:
 
     def train(self, data_path: str, label_path: str, checkpoint_dir: str):
         dataset = self.getdataset(data_path, label_path)
-        callback = tf.keras.callbacks.ModelCheckpoint(checkpoint_dir,
-                                                      save_weights_only=True,
-                                                      verbose=1)
+        checkpoint_cb = tf.keras.callbacks.ModelCheckpoint(checkpoint_dir,
+                                                           save_weights_only=True,
+                                                           verbose=1)
+        tensorboard_cb = keras.callbacks.TensorBoard(log_dir='logs/')
 
-        history = self.model.fit(dataset.batch(1), epochs=1, callbacks=[callback])
+        history = self.model.fit(dataset.batch(1), epochs=1, callbacks=[checkpoint_cb, tensorboard_cb])
 
         self.save()
         return history
