@@ -7,6 +7,7 @@ labels = []
 FILE_DATA = "resources/data.csv"
 FILE_LABEL = "resources/labels.csv"
 label_types = {
+    "unrelated": 0,
     "savings": 1,
     "investment": 2,
     "insurance": 3,
@@ -17,6 +18,7 @@ label_types = {
 }
 
 files = {
+    "unrelated": label_types["unrelated"],
     "damage": label_types["insurance"],
     "Allianz": label_types["investment"],
     "AXA": label_types["insurance"],
