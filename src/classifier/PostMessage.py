@@ -5,15 +5,15 @@ def postMessage(title: str, content: str, category: str):
     cid: int
     if category == "saving":
         cid = 5
-    elif category == "insurance":
+    elif category == "investing":
         cid = 6
-    elif category == "health":
+    elif category == "insurance":
         cid = 7
-    elif category == "mortgage":
+    elif category == "health":
         cid = 8
-    elif category == "loan":
-        cid = 9
     elif category == "mortgage":
+        cid = 9
+    elif category == "loan":
         cid = 10
     elif category == "retirement":
         cid = 11
@@ -33,5 +33,5 @@ def postMessage(title: str, content: str, category: str):
         print(response)
     return
 
-
-postMessage("new loan", "I was wondering how to get a new loan, can anyone help me?", "loan")
+if __name__ == "__main__":
+    postMessage("@Add", "This is a question for a mortgage", "health")
